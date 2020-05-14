@@ -40,6 +40,7 @@ import {
   initiate,
   handleLoadJsonFile,
   loadJcampFile,
+  loadJDFFile,
   handleLoadMOLFile,
   handleLoadZIPFile,
   setData,
@@ -156,6 +157,7 @@ import {
   SET_KEY_PREFERENCES,
   APPLY_KEY_PREFERENCES,
   LOAD_ZIP_FILE,
+  LOAD_JDF_FILE,
   CHANGE_RANGE_DATA,
   CHANGE_RANGE_SUM,
   ADD_RANGE,
@@ -242,6 +244,8 @@ export function spectrumReducer(state, action) {
       return handleLoadJsonFile(state, action.data);
     case LOAD_JCAMP_FILE:
       return loadJcampFile(state, action.files);
+    case LOAD_JDF_FILE:
+      return loadJDFFile(state, action.files);
     case LOAD_MOL_FILE:
       return handleLoadMOLFile(state, action.files);
     case LOAD_ZIP_FILE:
