@@ -20,6 +20,7 @@ import {
   enableFilter,
   deleteFilter,
   handleBaseLineCorrectionFilter,
+  filterSnapshotHandler,
 } from './actions/FiltersActions';
 import {
   handleHistoryUndo,
@@ -77,6 +78,7 @@ import {
   handleChangeActiveSpectrum,
   handleChangeSpectrumColor,
   handleDeleteSpectra,
+  addMissingProjectionHander,
 } from './actions/SpectrumsActions';
 import {
   setSelectedTool,
@@ -166,6 +168,8 @@ import {
   ADD_2D_INTEGRAL,
   DELETE_2D_INTEGRAL,
   SET_2D_PROJECTION,
+  ADD_MISSING_PROJECTION,
+  SET_FILTER_SNAPSHOT,
 } from './types/Types';
 
 setAutoFreeze(false);
@@ -307,9 +311,10 @@ export function spectrumReducer(state, action) {
       return calculateManualPhaseCorrection(state, action.value);
     case ENABLE_FILTER:
       return enableFilter(state, action.id, action.checked);
-
     case DELETE_FILTER:
       return deleteFilter(state, action.id);
+    case SET_FILTER_SNAPSHOT:
+      return filterSnapshotHandler(state, action);
 
     case CHANGE_VISIBILITY:
       return handleSpectrumVisibility(state, action);
@@ -399,6 +404,8 @@ export function spectrumReducer(state, action) {
       return delete2dIntegralHandler(state, action);
     case SET_2D_PROJECTION:
       return projection2dHandler(state, action);
+    case ADD_MISSING_PROJECTION:
+      return addMissingProjectionHander(state, action);
 
     case RESET_DOMAIN:
       return handelResetDomain(state);

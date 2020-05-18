@@ -1,9 +1,7 @@
 /* eslint-disable no-unused-vars */
 // import baseline from './baseline';
 import max from 'ml-array-max';
-import equallySpaced from 'ml-array-xy-equally-spaced';
-import { XY, X } from 'ml-spectra-processing';
-import { analyseMultiplet } from 'multiplet-analysis';
+import { xyIntegration } from 'ml-spectra-processing';
 
 import generateID from '../utilities/generateID';
 
@@ -92,6 +90,17 @@ export class Datum1D {
     FiltersManager.reapplyFilters(this);
   }
 
+  applyFilterSnapshot(id) {
+    if (id) {
+      const index = this.filters.findIndex((f) => f.id === id);
+      const filters = this.filters.slice(0, index + 1);
+      FiltersManager.reapplyFilters(this, filters);
+    } else {
+      //close filter snapshot mode and replay all enabled filters
+      FiltersManager.reapplyFilters(this);
+    }
+  }
+
   preprocessing() {
     if (
       this.info.isFid &&
@@ -158,7 +167,7 @@ export class Datum1D {
   }
 
   getIntegration(from, to) {
-    return XY.integration(
+    return xyIntegration(
       { x: this.data.x, y: this.data.re },
       { from, to, reverse: true },
     );
